@@ -1,0 +1,7 @@
+= Couchbase and Spring Boot
+
+This workspace will show how to query a Couchbase bucket using simple Spring Boot application.
+
+. Build: `mvn package`
+. Run: mvn `spring-boot:run` or `java -jar target/bootiful-couchbase.jar
+
