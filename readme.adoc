@@ -2,8 +2,11 @@
 
 This workspace will show how to save and query a JSON document from a Couchbase bucket using a simple Spring Boot application.
 
+== Classic
+
 . Build: `mvn package`
-. Run: `mvn spring-boot:run` or `java -jar target/couchbase-spring.jar`
+. Start Couchbase: `docker stack deploy --compose-file=docker-compose.yml couchbase`
+. Run: `mvn install` or `java -jar target/couchbase-spring.jar`
 . Output:
 +
 ```
@@ -37,6 +40,49 @@ Book{isbn=978-1-4919-1889-0, name=Minecraft Modding with Forge, cost=29.99}
 2017-01-24 07:26:52.000  INFO 50993 --- [       Thread-5] o.s.j.e.a.AnnotationMBeanExporter        : Unregistering JMX-exposed beans on shutdown
 2017-01-24 07:26:52.006  INFO 50993 --- [       Thread-5] c.c.c.core.config.ConfigurationProvider  : Closed bucket books
 2017-01-24 07:26:52.006  INFO 50993 --- [      cb-io-1-2] com.couchbase.client.core.node.Node      : Disconnected from Node localhost
+```
+
+== Docker
+
+. Build Docker image: `mvn clean package -Pdocker`
+. Start Couchbase: `docker stack deploy --compose-file=docker-compose.yml couchbase`
+. Run container: `mvn install -Pdocker`
++
+```
+[INFO] --- spring-boot-maven-plugin:1.4.0.RELEASE:run (install) @ couchbase-spring ---
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v1.4.0.RELEASE)
+
+2017-01-24 19:28:29.336  INFO 52270 --- [           main] org.example.webapp.Application           : Starting Application on Aruns-MacBook-Pro.local with PID 52270 (/Users/arungupta/workspaces/couchbase-spring/target/classes started by arungupta in /Users/arungupta/workspaces/couchbase-spring)
+2017-01-24 19:28:29.339  INFO 52270 --- [           main] org.example.webapp.Application           : No active profile set, falling back to default profiles: default
+2017-01-24 19:28:29.521  INFO 52270 --- [           main] s.c.a.AnnotationConfigApplicationContext : Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@f022ab7: startup date [Tue Jan 24 19:28:29 EST 2017]; root of context hierarchy
+2017-01-24 19:28:30.315  INFO 52270 --- [           main] com.couchbase.client.core.CouchbaseCore  : CouchbaseEnvironment: {sslEnabled=false, sslKeystoreFile='null', sslKeystorePassword='null', queryEnabled=false, queryPort=8093, bootstrapHttpEnabled=true, bootstrapCarrierEnabled=true, bootstrapHttpDirectPort=8091, bootstrapHttpSslPort=18091, bootstrapCarrierDirectPort=11210, bootstrapCarrierSslPort=11207, ioPoolSize=8, computationPoolSize=8, responseBufferSize=16384, requestBufferSize=16384, kvServiceEndpoints=1, viewServiceEndpoints=1, queryServiceEndpoints=1, searchServiceEndpoints=1, ioPool=NioEventLoopGroup, coreScheduler=CoreScheduler, eventBus=DefaultEventBus, packageNameAndVersion=couchbase-java-client/2.2.8 (git: 2.2.8, core: 1.2.9), dcpEnabled=false, retryStrategy=BestEffort, maxRequestLifetime=75000, retryDelay=ExponentialDelay{growBy 1.0 MICROSECONDS, powers of 2; lower=100, upper=100000}, reconnectDelay=ExponentialDelay{growBy 1.0 MILLISECONDS, powers of 2; lower=32, upper=4096}, observeIntervalDelay=ExponentialDelay{growBy 1.0 MICROSECONDS, powers of 2; lower=10, upper=100000}, keepAliveInterval=30000, autoreleaseAfter=2000, bufferPoolingEnabled=true, tcpNodelayEnabled=true, mutationTokensEnabled=false, socketConnectTimeout=1000, dcpConnectionBufferSize=20971520, dcpConnectionBufferAckThreshold=0.2, dcpConnectionName=dcp/core-io, callbacksOnIoPool=false, queryTimeout=7500, viewTimeout=7500, kvTimeout=2500, connectTimeout=5000, disconnectTimeout=25000, dnsSrvEnabled=false}
+2017-01-24 19:28:30.533  INFO 52270 --- [      cb-io-1-1] com.couchbase.client.core.node.Node      : Connected to Node localhost
+2017-01-24 19:28:30.598  INFO 52270 --- [      cb-io-1-1] com.couchbase.client.core.node.Node      : Disconnected from Node localhost
+2017-01-24 19:28:30.879  INFO 52270 --- [      cb-io-1-2] com.couchbase.client.core.node.Node      : Connected to Node localhost
+2017-01-24 19:28:31.005  INFO 52270 --- [-computations-4] c.c.c.core.config.ConfigurationProvider  : Opened bucket books
+2017-01-24 19:28:31.549  INFO 52270 --- [           main] o.s.j.e.a.AnnotationMBeanExporter        : Registering beans for JMX exposure on startup
+Book{isbn=978-1-4919-1889-0, name=Minecraft Modding with Forge, cost=29.99}
+2017-01-24 19:28:31.766  INFO 52270 --- [           main] org.example.webapp.Application           : Started Application in 2.768 seconds (JVM running for 6.337)
+[INFO] 
+[INFO] --- docker-maven-plugin:0.19.0:start (install) @ couchbase-spring ---
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 5.516 s
+[INFO] Finished at: 2017-01-24T19:28:31-05:00
+[INFO] Final Memory: 49M/567M
+[INFO] ------------------------------------------------------------------------
+2017-01-24 19:28:32.094  INFO 52270 --- [       Thread-5] s.c.a.AnnotationConfigApplicationContext : Closing org.springframework.context.annotation.AnnotationConfigApplicationContext@f022ab7: startup date [Tue Jan 24 19:28:29 EST 2017]; root of context hierarchy
+2017-01-24 19:28:32.095  INFO 52270 --- [       Thread-5] o.s.j.e.a.AnnotationMBeanExporter        : Unregistering JMX-exposed beans on shutdown
+2017-01-24 19:28:32.108  INFO 52270 --- [      cb-io-1-2] com.couchbase.client.core.node.Node      : Disconnected from Node localhost
+2017-01-24 19:28:32.109  INFO 52270 --- [       Thread-5] c.c.c.core.config.ConfigurationProvider  : Closed bucket books
 ```
 
 
