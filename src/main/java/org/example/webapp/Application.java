@@ -9,17 +9,14 @@ import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.couchbase.core.CouchbaseOperations;
-import org.springframework.retry.annotation.EnableRetry;
 
 /**
  * @author arungupta
  * @author <a href="mailto:josh@joshlong.com">Josh Long</a>
  */
-@EnableRetry
 @SpringBootApplication
 public class Application {
 
-	
 	@Bean
 	CouchbaseHealthIndicator couchbaseHealthIndicator(CouchbaseOperations couchbaseOperations) {
 		return new CouchbaseHealthIndicator(couchbaseOperations);
@@ -27,7 +24,7 @@ public class Application {
 
 	@Bean
 	HealthIndicator couchbaseBucketHealthIndicator(Bucket bucket) {
-		return () -> (!bucket.isClosed() ? Health.up() : Health.down()).build();
+		return () -> (bucket.isClosed() ? Health.down() : Health.up()).build();
 	}
 
 	@Bean
