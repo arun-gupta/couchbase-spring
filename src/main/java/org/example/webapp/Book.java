@@ -1,10 +1,12 @@
 package org.example.webapp;
 
 import com.couchbase.client.java.repository.annotation.Id;
+import org.springframework.data.couchbase.core.mapping.Document;
 
 /**
  * @author arungupta
  */
+@Document
 public class Book {
     
     @Id
