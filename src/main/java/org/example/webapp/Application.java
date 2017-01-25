@@ -17,7 +17,6 @@ import org.springframework.data.couchbase.core.CouchbaseOperations;
 @SpringBootApplication
 public class Application {
 
-
 	@Bean
 	CouchbaseHealthIndicator couchbaseHealthIndicator(CouchbaseOperations couchbaseOperations) {
 		return new CouchbaseHealthIndicator(couchbaseOperations);
@@ -25,7 +24,7 @@ public class Application {
 
 	@Bean
 	HealthIndicator couchbaseBucketHealthIndicator(Bucket bucket) {
-		return () -> (!bucket.isClosed() ? Health.up() : Health.down()).build();
+		return () -> (bucket.isClosed() ? Health.down() : Health.up()).build();
 	}
 
 	@Bean
