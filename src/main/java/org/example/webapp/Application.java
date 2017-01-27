@@ -17,28 +17,28 @@ import org.springframework.data.couchbase.core.CouchbaseOperations;
 @SpringBootApplication
 public class Application {
 
-	@Bean
-	CouchbaseHealthIndicator couchbaseHealthIndicator(CouchbaseOperations couchbaseOperations) {
-		return new CouchbaseHealthIndicator(couchbaseOperations);
-	}
+    @Bean
+    CouchbaseHealthIndicator couchbaseHealthIndicator(CouchbaseOperations couchbaseOperations) {
+        return new CouchbaseHealthIndicator(couchbaseOperations);
+    }
 
-	@Bean
-	HealthIndicator couchbaseBucketHealthIndicator(Bucket bucket) {
-		return () -> (bucket.isClosed() ? Health.down() : Health.up()).build();
-	}
+    @Bean
+    HealthIndicator couchbaseBucketHealthIndicator(Bucket bucket) {
+        return () -> (bucket.isClosed() ? Health.down() : Health.up()).build();
+    }
 
-	@Bean
-	CommandLineRunner demo(BookRepository repository) {
-		return args -> {
-			String isbn = "978-1-4919-1889-0";
-			repository.save(new Book(isbn, "Minecraft Modding with Forge", "29.99"));
+    @Bean
+    CommandLineRunner demo(BookRepository repository) {
+        return args -> {
+            String isbn = "978-1-4919-1889-0";
+            repository.save(new Book(isbn, "Minecraft Modding with Forge", "29.99"));
 
-			Book book = repository.findByIsbn(isbn);
-			System.out.println(book);
-		};
-	}
+            Book book = repository.findByIsbn(isbn);
+            System.out.println(book);
+        };
+    }
 
-	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
 }
