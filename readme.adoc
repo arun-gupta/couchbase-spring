@@ -5,7 +5,7 @@ This workspace will show how to save and query a JSON document from a Couchbase 
 == Classic
 
 . Build: `mvn package`
-. Start Couchbase: `docker stack deploy --compose-file=docker-compose.yml couchbase`
+. Start Couchbase: `docker run -d -p 8091-8093:8091-8093 -p 11210:11210 arungupta/oreilly-couchbase`
 . Run: `mvn install` or `java -jar target/couchbase-spring.jar`
 . Output:
 +
