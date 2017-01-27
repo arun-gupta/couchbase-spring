@@ -70,6 +70,20 @@
                         <groupId>io.fabric8</groupId>
                         <artifactId>docker-maven-plugin</artifactId>
                         <version>0.19.0</version>
+                        <configuration>
+                            <images>
+                                <image>
+                                    <name>arungupta/${project.artifactId}</name>
+                                    <build>
+                                        <from>fabric8/java-alpine-openjdk8-jdk</from>
+                                        <assembly>
+                                            <descriptorRef>artifact</descriptorRef>
+                                        </assembly>
+                                        <cmd>java -jar maven/${project.build.finalName}.jar</cmd>
+                                    </build>
+                                </image>
+                            </images>
+                        </configuration>
                         <executions>
                             <execution>
                                 <id>package</id>
